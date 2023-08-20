@@ -12,15 +12,13 @@
 
 int _printf(const char *format, ...)
 {
-	int i = 0;
-	int count = 0;
-	int str_len1;
+	int i, count, str_len1;
 	char secondarg;
 	char *thirdarg;
-	
-	va_list result;
-	va_start(result, format);
 
+	va_list result;
+
+	va_start(result, format);
 	for (i = 0; format && format[i]; i++)
 	{
 		if (format[i] != '%')
