@@ -48,9 +48,9 @@ int _printf(const char *format, ...)
                                 str_len1 = strlen(thirdarg);
                                 count += str_len1;
                         }
-                        else
+                        else if (nextarg == 'r')
                         {
-                                putchar('%');
+                                printf("%%r");
                                 count ++;
                         }
 		}
