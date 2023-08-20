@@ -12,8 +12,8 @@
 
 int _printf(const char *format, ...)
 {
-	int i, count, str_len1;
-	int secondarg, nextarg;
+	int i, count = 0, str_len1;
+	char secondarg, nextarg;
 	char *thirdarg;
 
 	va_list result;
@@ -28,7 +28,8 @@ int _printf(const char *format, ...)
                 }
                 else
                 {
-                        nextarg = va_arg(result, int);
+			i++;
+                        nextarg = format[i];
                         if (nextarg == '%')
                         {
                                 putchar('%');
@@ -50,7 +51,7 @@ int _printf(const char *format, ...)
                         else
                         {
                                 putchar('%');
-                                count += 2;
+                                count ++;
                         }
 		}
 	}
