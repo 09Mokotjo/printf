@@ -12,8 +12,8 @@
 
 int _printf(const char *format, ...)
 {
-	int i, count = 0, str_len1;
-	char secondarg, nextarg;
+	int i, count = 0;
+	char secondarg;
 	char *thirdarg;
 
 	va_list result;
@@ -22,37 +22,36 @@ int _printf(const char *format, ...)
 	for (i = 0; format && format[i]; i++)
 	{
 		if (format[i] != '%')
-                {
-                        putchar(format[i]);
-                        count++;
-                }
-                else
-                {
+		{
+			putchar(format[i]);
+			count++;
+		}
+		else
+		{
 			i++;
-                        nextarg = format[i];
-                        if (nextarg == '%')
-                        {
-                                putchar('%');
-                                count++;
-                        }
-                        else if (nextarg == 'c')
-                        {
-                                secondarg = va_arg(result, int);
-                                putchar(secondarg);
-                                count++;
-                        }
-			else if (nextarg == 's')
-                        {
-                                thirdarg = va_arg(result, char*);
-                                fputs(thirdarg, stdout);
-                                str_len1 = strlen(thirdarg);
-                                count += str_len1;
-                        }
-                        else if (nextarg == 'r')
-                        {
-                                printf("%%r");
-                                count ++;
-                        }
+			if (format[i] == '%')
+			{
+				putchar('%');
+				count++;
+			}
+			else if (format[i] == 'c')
+			{
+				secondarg = va_arg(result, int);
+				putchar(secondarg);
+				count++;
+			}
+			else if (format[i] == 's')
+			{
+				thirdarg = va_arg(result, char*);
+				fputs(thirdarg, stdout);
+				count += strlen(thirdarg);
+			}
+			else
+			{
+				putchar('%');
+				putchar(format[i]);
+				count += 2;
+			}
 		}
 	}
 	va_end(result);
