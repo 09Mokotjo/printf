@@ -1,60 +1,54 @@
-#include "main.h"
-#include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
 
-/**
- * _printf - Function to print character according to input format
- * @format: The input format of the character
- *
- * Return: The printed character according to format
- */
-
-int _printf(const char *format, ...)
+int _printf'(const char * format)'
 {
-	int i, count = 0, str_len1;
-	char secondarg, nextarg;
-	char *thirdarg;
+	int count = 0;
+	va_list args;
+	va_start (args, format);
 
-	va_list result;
-
-	va_start(result, format);
-	for (i = 0; format && format[i]; i++)
+	for (int i = 0; format[i] != '\0'; i++)
 	{
-		if (format[i] != '%')
-                {
-                        putchar(format[i]);
-                        count++;
-                }
-                else
-                {
-			i++;
-                        nextarg = format[i];
-                        if (nextarg == '%')
-                        {
-                                putchar('%');
-                                count++;
-                        }
-                        else if (nextarg == 'c')
-                        {
-                                secondarg = va_arg(result, int);
-                                putchar(secondarg);
-                                count++;
-                        }
-			else if (nextarg == 's')
-                        {
-                                thirdarg = va_arg(result, char*);
-                                fputs(thirdarg, stdout);
-                                str_len1 = strlen(thirdarg);
-                                count += str_len1;
-                        }
-                        else
-                        {
-                                putchar('%');
-                                count ++;
-                        }
+		if (format[i] == '%')
+		{
+			if (format[i + 1] == 'c')
+			{
+				/* Handle 'c' conversion specifier*/
+				int character = va_arg(args, int);
+				putchar (character);
+				count++;
+				i++;
+			}
+			else if (format[i + 1] == 's')
+			{
+				/* Handle 's' conversion specifier*/
+				char *string = va_arg(args, char *);
+				for (int j = 0; string[j] != '\0'; j++)
+				{
+					putchar(string[j]);
+					count++;
+				}
+				i++;
+			}
+			else if (format[i + 1] == '%')
+			{
+				/* Handle '%' conversion specifier*/
+				putchar('%');
+				count++;
+				i++;
+			}
 		}
-	}
-	va_end(result);
-	return (count);
+		else
+		{
+			 Print the character
+			putchar(format[i]);
+			count++;
 }
+}
+
+va_end(args);
+
+return count; /*  added  around expression being returned
+		
+}
+
