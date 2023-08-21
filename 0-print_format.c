@@ -2,6 +2,31 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+
+/**
+ * num_digits - Function to calculate the length of an integer
+ * @num: input integer
+ *
+ * Return: Always 0 success
+ */
+
+int num_digits(int num) {
+	int count = 0;
+
+	if (num == 0)
+	{
+		return 1;
+	}
+
+	while (num != 0)
+	{
+		num /= 10;
+		count++;
+	}
+
+	return count;
+}
+
 /**
  * _printf - Function to print arguments in their given formats
  * @format: the input argument format
@@ -11,7 +36,7 @@
 
 int _printf(const char *format, ...)
 {
-	int i, count = 0;
+	int i, count = 0, j;
 	char secondarg;
 	char *thirdarg;
 
@@ -44,6 +69,12 @@ int _printf(const char *format, ...)
 				thirdarg = va_arg(result, char*);
 				fputs(thirdarg, stdout);
 				count += strlen(thirdarg);
+			}
+			else if (format[i] == 'd' || format[i] == 'i')
+			{
+				j = va_arg(result, int);
+				putchar(j);
+				count += num_digits(j);
 			}
 			else
 			{
