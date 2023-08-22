@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#include <stdlib.h>
-
+#include <unistd.h>
 /**
  * _printf - Function to print arguments in their given formats
  * @format: the input argument format
@@ -13,39 +12,52 @@
 
 int _printf(const char *format, ...)
 {
-	int count = 0, secondarg;
+	int count, secondarg, j;
 	char *thirdarg;
-	const char *ptr;
+
 	va_list(result);
 	va_start(result, format);
 
-	for (ptr = format; *ptr != '\0'; ptr++)
+	for (count = 0; *format != '\0'; format++)
 	{
-		if (*ptr != '%')
+		if (*format != '%')
 		{
-			putchar(*ptr);
+			putchar(*format);
 			count++;
 		}
 		else
 		{
-			ptr++;
-			if (*ptr == '%')
+			format++;
+			if (*format == '%')
 			{
 				putchar('%');
 				count++;
 			}
-			else if (*ptr == 'c')
+			else if (*format == 'c')
 			{
 				secondarg = va_arg(result, int);
 				putchar(secondarg);
 				count++;
 			}
-			else if (*ptr == 's')
+			else if (*format == 's')
 			{
 				thirdarg = va_arg(result, char*);
 				fputs(thirdarg, stdout);
 				count += strlen(thirdarg);
 			}
+			else if (*format == 'd' || *format == 'i')
+			{
+				j = va_arg(result, int);
+				printf("%d", j);
+				count ++;
+			}
+			else
+			{
+				putchar('%');
+				putchar(*format);
+				count += 2;
+			}
+
 		}
 	}
 	va_end(result);
