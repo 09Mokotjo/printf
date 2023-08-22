@@ -4,6 +4,39 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+char *intToBinaryString(int num)
+{
+	int temp = num;
+	int binaryLength = 0;
+	int index = binaryLength - 1;
+	char *binaryStr = (char *)malloc(binaryLength + 1);
+
+	if (num == 0)
+	{
+		return strdup("0");
+	}
+
+	while (temp > 0)
+	{
+		temp /= 2;
+		binaryLength++;
+	}
+
+	if (binaryStr == NULL)
+	{
+		return NULL;
+	}
+
+	while (num > 0)
+	{
+		binaryStr[index] = (num % 2) + '0';
+		num /= 2;
+		index--;
+	}
+	binaryStr[binaryLength] = '\0';
+	return (binaryStr);
+}
+
 /**
  * _printf - Function to print arguments in their given formats
  * @format: the input argument format
@@ -13,9 +46,9 @@
 
 int _printf(const char *format, ...)
 {
-	int i, count = 0, j;
+	int i, count = 0, j, k;
 	char secondarg;
-	char *thirdarg, str[20];
+	char *thirdarg, str[20], *binaryStr;
 
 	va_list(result);
 	va_start(result, format);
@@ -53,6 +86,17 @@ int _printf(const char *format, ...)
 				sprintf(str, "%d", j);
 				fputs(str, stdout);
 				count += strlen(str);
+			}
+			else if (format[i] == 'b')
+			{
+				k = va_arg(result, int);
+				binaryStr = intToBinaryString(k);
+				if (binaryStr != NULL)
+				{
+					fputs(binaryStr, stdout);
+					count += strlen(binaryStr);
+					free(binaryStr);
+				}
 			}
 			else
 			{
