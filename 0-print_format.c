@@ -42,14 +42,16 @@ int _printf(const char *format, ...)
 			else if (*format == 's')
 			{
 				thirdarg = va_arg(result, char*);
-				fputs(thirdarg, stdout);
-				count += strlen(thirdarg);
+				while (*thirdarg != '\0')
+				{
+					count += putchar(*thirdarg);
+					thirdarg++;
+				}
 			}
 			else if (*format == 'd' || *format == 'i')
 			{
 				j = va_arg(result, int);
-				printf("%d", j);
-				count ++;
+				count += print_integer(j);
 			}
 			else
 			{
