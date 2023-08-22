@@ -53,6 +53,10 @@ int _printf(const char *format, ...)
 				j = va_arg(result, int);
 				count += print_integer(j);
 			}
+			else if (*format == 'b')
+			{
+				count += handle_b(result);
+			}
 			else
 			{
 				putchar('%');
