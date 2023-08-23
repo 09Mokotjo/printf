@@ -57,6 +57,28 @@ int _printf(const char *format, ...)
 			{
 				count += handle_b(result);
 			}
+			else if (*format == 'u')
+{
+    unsigned int u_value = va_arg(result, unsigned int);
+    print_unsigned(u_value, &count);
+}
+else if (*format == 'o')
+{
+    unsigned int o_value = va_arg(result, unsigned int);
+    print_octal(o_value, &count);
+}
+else if (*format == 'x' || *format == 'X')
+{
+    unsigned int x_value = va_arg(result, unsigned int);
+    char specifier = *format;
+    print_hexadecimal(x_value, &count, specifier);
+}
+else if (*format == 'p')
+{
+    void *addr = va_arg(result, void *);
+    print_address(addr, &count);
+}
+
 			else
 			{
 				putchar('%');
@@ -69,22 +91,3 @@ int _printf(const char *format, ...)
 	va_end(result);
 	return (count);
 }
-
-void handle_numeric(va_list result, int *count, char specifier)
-{
-	int num = va_arg(result, int);
-
-	if (specifier == 'u')
-	{
-		print_unsigned(num, count);
-	}
-	else if (specifier == 'o')
-	{
-		print_octal(num, count);
-	}
-	else if (specifier == 'x' || specifier == 'X')
-	{
-		print_hexadecimal(num, count, specifier);
-	}
-}
-

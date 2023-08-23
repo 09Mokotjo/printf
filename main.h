@@ -5,6 +5,7 @@
 void print_hexadecimal(unsigned int num, int *count, char specifier);
 void print_octal(unsigned int num, int *count);
 void print_unsigned(unsigned int num, int *count);
+void print_address(void *addr, int *count);
 int _printf(const char *format, ...);
 int handle_d(int num);
 int print_integer(int num);
