@@ -58,27 +58,31 @@ int _printf(const char *format, ...)
 				count += handle_b(result);
 			}
 			else if (*format == 'u')
-{
-    unsigned int u_value = va_arg(result, unsigned int);
-    print_unsigned(u_value, &count);
-}
-else if (*format == 'o')
-{
-    unsigned int o_value = va_arg(result, unsigned int);
-    print_octal(o_value, &count);
-}
-else if (*format == 'x' || *format == 'X')
-{
-    unsigned int x_value = va_arg(result, unsigned int);
-    char specifier = *format;
-    print_hexadecimal(x_value, &count, specifier);
-}
-else if (*format == 'p')
-{
-    void *addr = va_arg(result, void *);
-    print_address(addr, &count);
-}
-
+			{
+				unsigned int u_value = va_arg(result, unsigned int);
+				print_unsigned(u_value, &count);
+			}
+			else if (*format == 'o')
+			{
+				unsigned int o_value = va_arg(result, unsigned int);
+				print_octal(o_value, &count);
+			}
+			else if (*format == 'x' || *format == 'X')
+			{
+				unsigned int x_value = va_arg(result, unsigned int);
+				char specifier = *format;
+				print_hexadecimal(x_value, &count, specifier);
+			}
+			else if (*format == 'p')
+			{
+				void *addr = va_arg(result, void *);
+				print_address(addr, &count);
+			}
+			else if (*format == '%')
+			{
+				putchar('%');
+				count++;
+			}
 			else
 			{
 				putchar('%');
